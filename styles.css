@@ -14,6 +14,7 @@ body {
     height: 500px;
     width: 400px;
     border-radius: 5px;
+    border: 5px solid black;
 }
 
 .display {
@@ -26,8 +27,32 @@ body {
     justify-content: end;
 }
 
+.numbers {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+}
+
 .buttons {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
+    margin-left: 10px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    height: 50px;
+    width: 75px;
+    border: 1px solid white;
+}
+
+button:hover {
+    background-color: #3A3B3C;
 }
