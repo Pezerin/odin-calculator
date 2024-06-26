@@ -78,6 +78,7 @@ const addNumber = (number) => {
 
     if (displayValue == 0 || reset) {
         displayValue = number;
+        reset = false;
     } else {
         displayValue = displayValue.toString() + number.toString();
     }
