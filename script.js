@@ -5,7 +5,7 @@ const divide = (a, b) => a / b;
 
 let firstNum = 0; 
 let operator = "";
-let secondNum;
+let secondNum = 0;
 
 const operate = (first, operator, second) => {
     if (operator === "+") {
@@ -49,6 +49,9 @@ const equals = document.querySelector(".equals");
 ac.addEventListener("click", () => {
     displayValue = 0;
     display.textContent = displayValue;
+    firstNum = 0;
+    secondNum = 0;
+    operator = "";
 });
 
 plusminus.addEventListener("click", () => {
@@ -62,3 +65,69 @@ percent.addEventListener("click", () => {
     }
     display.textContent = displayValue.toString();
 });
+
+const addNumber = (number) => {
+    if (displayValue == 0) {
+        displayValue = number;
+    } else {
+        displayValue = displayValue.toString() + number.toString();
+    }
+    display.textContent = displayValue
+};
+
+const updateDisplay = () => {
+    zero.addEventListener("click", () => addNumber(0));
+    one.addEventListener("click", () => addNumber(1));
+    two.addEventListener("click", () => addNumber(2));
+    three.addEventListener("click", () => addNumber(3));
+    four.addEventListener("click", () => addNumber(4));
+    five.addEventListener("click", () => addNumber(5));
+    six.addEventListener("click", () => addNumber(6));
+    seven.addEventListener("click", () => addNumber(7));
+    eight.addEventListener("click", () => addNumber(8));
+    nine.addEventListener("click", () => addNumber(9));
+};
+
+addition.addEventListener("click", () => {
+    if (secondNum === 0) {
+        firstNum = parseInt(displayValue, 10);
+        displayValue = 0;
+        operator = "+";
+    }
+});
+
+subtraction.addEventListener("click", () => {
+    if (secondNum === 0) {
+        firstNum = parseInt(displayValue, 10);
+        displayValue = 0;
+        operator = "-";
+    }
+});
+
+multiplication.addEventListener("click", () => {
+    if (secondNum === 0) {
+        firstNum = parseInt(displayValue, 10);
+        displayValue = 0;
+        operator = "*";
+    }
+});
+
+divison.addEventListener("click", () => {
+    if (secondNum === 0) {
+        firstNum = parseInt(displayValue, 10);
+        displayValue = 0;
+        operator = "/";
+    }
+});
+
+equals.addEventListener("click", () => {
+    if(firstNum !== 0) {
+        secondNum = parseInt(displayValue, 10);
+        displayValue = operate(firstNum, operator, secondNum);
+        firstNum = 0;
+        secondNum = 0;
+        display.textContent = displayValue;
+    }
+});
+
+updateDisplay();
