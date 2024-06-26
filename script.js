@@ -15,11 +15,15 @@ const operate = (first, operator, second) => {
     } else if (operator === "*") {
         return multiply(first, second);
     } else {
+        if (second === 0) {
+            return "Error (Div by 0)";
+        }
         return divide(first, second);
     }
 }
 
 let displayValue = 0;
+let reset = false;
 const display = document.querySelector(".numbers")
 
 const ac = document.querySelector(".ac");
@@ -52,6 +56,7 @@ ac.addEventListener("click", () => {
     firstNum = 0;
     secondNum = 0;
     operator = "";
+    reset = false;
 });
 
 plusminus.addEventListener("click", () => {
@@ -67,7 +72,11 @@ percent.addEventListener("click", () => {
 });
 
 const addNumber = (number) => {
-    if (displayValue == 0) {
+    if (number === "." && displayValue.toString().includes(".")) {
+        number = "";
+    }
+
+    if (displayValue == 0 || reset) {
         displayValue = number;
     } else {
         displayValue = displayValue.toString() + number.toString();
@@ -86,47 +95,39 @@ const updateDisplay = () => {
     seven.addEventListener("click", () => addNumber(7));
     eight.addEventListener("click", () => addNumber(8));
     nine.addEventListener("click", () => addNumber(9));
+    decimal.addEventListener("click", () => addNumber("."));
 };
 
-addition.addEventListener("click", () => {
-    if (secondNum === 0) {
-        firstNum = parseInt(displayValue, 10);
+const handleOperator = (op) => {
+    if (operator === "") {
+        firstNum = parseFloat(displayValue);
+        operator = op;
         displayValue = 0;
-        operator = "+";
+    } else {
+        secondNum = parseFloat(displayValue);
+        displayValue = operate(firstNum, operator, secondNum);
+        display.textContent = displayValue;
+        firstNum = parseFloat(displayValue);
     }
-});
+    operator = op;
+    reset = true;
+};
 
-subtraction.addEventListener("click", () => {
-    if (secondNum === 0) {
-        firstNum = parseInt(displayValue, 10);
-        displayValue = 0;
-        operator = "-";
-    }
-});
+addition.addEventListener("click", () => handleOperator("+"));
+subtraction.addEventListener("click", () => handleOperator("-"));
+multiplication.addEventListener("click", () => handleOperator("*"));
+divison.addEventListener("click", () => handleOperator("/"));
 
-multiplication.addEventListener("click", () => {
-    if (secondNum === 0) {
-        firstNum = parseInt(displayValue, 10);
-        displayValue = 0;
-        operator = "*";
-    }
-});
-
-divison.addEventListener("click", () => {
-    if (secondNum === 0) {
-        firstNum = parseInt(displayValue, 10);
-        displayValue = 0;
-        operator = "/";
-    }
-});
 
 equals.addEventListener("click", () => {
-    if(firstNum !== 0) {
-        secondNum = parseInt(displayValue, 10);
+    if(operator !== "") {
+        secondNum = parseFloat(displayValue, 10);
         displayValue = operate(firstNum, operator, secondNum);
         firstNum = 0;
         secondNum = 0;
+        operator = "";
         display.textContent = displayValue;
+        reset = true;
     }
 });
 
